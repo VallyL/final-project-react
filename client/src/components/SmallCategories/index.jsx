@@ -62,7 +62,7 @@ function SmallCategories() {
   }
 
   return (
-    <div style={{ padding: "70px 50px" }}>
+    <div style={{ padding: "0px", margin: "70px 50px" }}>
       <div
         style={{
           display: "flex",
@@ -96,7 +96,7 @@ function SmallCategories() {
         {categories.slice(0, 4).map((category) => (
           <Grid item xs={12} sm={6} md={3} key={category.id}>
             <Link
-              to={`/categories/${category.id}`}
+              to={`/categories/${category.title}`}
               style={{ textDecoration: "none" }}
             >
               <CategoryContainer>
