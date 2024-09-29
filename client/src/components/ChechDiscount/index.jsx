@@ -28,7 +28,7 @@ const HeroButton = styled(Button)(({ theme }) => ({
   lineHeight: "26px",
   backgroundColor: "rgba(13, 80, 255, 1)",
   color: "white",
-  padding: "15px 30px",
+  padding: "15px 60px",
   borderRadius: "5px",
   textDecoration: "none",
 }));
