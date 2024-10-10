@@ -1,5 +1,11 @@
+import AllCategoriesComponent from "../../components/AllCategoriesComponent";
+
 function CategoriesPage() {
-  return <div></div>;
+  return (
+    <>
+      <AllCategoriesComponent />
+    </>
+  );
 }
 
 export default CategoriesPage;

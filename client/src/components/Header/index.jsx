@@ -1,12 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  styled,
-} from "@mui/material";
+import { AppBar, Toolbar, Typography, IconButton, styled } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Logo from "../../assets/icons/logo.svg";
 

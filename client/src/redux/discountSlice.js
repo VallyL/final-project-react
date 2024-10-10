@@ -11,7 +11,7 @@ export const sendDiscountRequest = createAsyncThunk(
   async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:3333/order/send",
+        "http://localhost:3333/sale/send",
         data
       );
       return response.data;
