@@ -1,5 +1,11 @@
+import AllProductsComponent from "../../components/AllProductsComponent";
+
 function AllProductsPage() {
-  return <div></div>;
+  return (
+    <>
+      <AllProductsComponent />
+    </>
+  );
 }
 
 export default AllProductsPage;
