@@ -1,5 +1,11 @@
+import CartHeading from "../../components/CartHeading";
+
 function CartPage() {
-  return <div></div>;
+  return (
+    <>
+      <CartHeading />
+    </>
+  );
 }
 
 export default CartPage;

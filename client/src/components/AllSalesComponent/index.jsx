@@ -78,7 +78,7 @@ const FilterContainer = styled(Box)({
   justifyContent: "start",
   gap: "20px",
   alignItems: "center",
-  marginBottom: "20px",
+  marginBottom: "0px",
 });
 
 const FilterLabel = styled(Typography)({
