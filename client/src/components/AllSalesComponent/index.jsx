@@ -7,8 +7,6 @@ import {
   styled,
   Box,
   TextField,
-  Checkbox,
-  FormControlLabel,
   Select,
   MenuItem,
   Badge,
@@ -27,39 +25,6 @@ const MainButton = styled(Button)(({ theme }) => ({
   border: "2px solid rgba(221, 221, 221, 1)",
   marginRight: "10px",
 }));
-
-const CategoriesButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(40, 40, 40, 1)",
-  borderRadius: "10px",
-  border: "2px solid rgba(221, 221, 221, 1)",
-  padding: "10px 20px",
-}));
-
-const CategoriesHeading = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "40px",
-  color: "black",
-  marginBottom: "0px",
-  marginTop: "60px",
-});
-
-const FilterContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "start",
-  gap: "20px",
-  alignItems: "center",
-  marginBottom: "0px",
-});
-
-const FilterLabel = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-});
 
 const FilterInput = styled(TextField)(({ theme }) => ({
   width: "112px",
@@ -88,6 +53,39 @@ const FilterInput = styled(TextField)(({ theme }) => ({
   },
   marginRight: "0px",
 }));
+
+const SalesButton = styled(Button)(({ theme }) => ({
+  fontSize: "16px",
+  fontWeight: 500,
+  lineHeight: "20px",
+  color: "rgba(40, 40, 40, 1)",
+  borderRadius: "10px",
+  border: "2px solid rgba(221, 221, 221, 1)",
+  padding: "10px 20px",
+}));
+
+const SalesHeading = styled(Typography)({
+  fontSize: "64px",
+  fontWeight: 700,
+  lineHeight: "40px",
+  color: "black",
+  marginBottom: "0px",
+  marginTop: "60px",
+});
+
+const FilterContainer = styled(Box)({
+  display: "flex",
+  justifyContent: "start",
+  gap: "20px",
+  alignItems: "center",
+  marginBottom: "20px",
+});
+
+const FilterLabel = styled(Typography)({
+  fontSize: "20px",
+  fontWeight: 600,
+  lineHeight: "26px",
+});
 
 const ProductCard = styled(Box)({
   display: "flex",
@@ -177,7 +175,7 @@ const AddToCartButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-function AllProductsComponent() {
+function AllSalesComponent() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const isLoading = useSelector((state) => state.products.isLoading);
@@ -186,14 +184,17 @@ function AllProductsComponent() {
 
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
-  const [showDiscountedOnly, setShowDiscountedOnly] = useState(false);
   const [sortOption, setSortOption] = useState("by default");
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const filteredProducts = products.filter((product) => {
+  const discountedProducts = products.filter(
+    (product) => product.discont_price !== null
+  );
+
+  const filteredProducts = discountedProducts.filter((product) => {
     if (priceFrom && !isNaN(priceFrom)) {
       if (product.price < parseFloat(priceFrom)) {
         return false;
@@ -204,9 +205,6 @@ function AllProductsComponent() {
         return false;
       }
     }
-    if (showDiscountedOnly && !product.discont_price) {
-      return false;
-    }
     return true;
   });
 
@@ -215,9 +213,9 @@ function AllProductsComponent() {
       case "newest":
         return new Date(b.createdAt) - new Date(a.createdAt);
       case "price: high-low":
-        return b.price - a.price;
+        return b.discont_price - a.discont_price;
       case "price: low-high":
-        return a.price - b.price;
+        return a.discont_price - b.discont_price;
       default:
         return 0;
     }
@@ -238,13 +236,13 @@ function AllProductsComponent() {
           <MainButton component={Link} to="/">
             Main page
           </MainButton>
-          <CategoriesButton component={Link} to="/categories">
-            All Products
-          </CategoriesButton>
+          <SalesButton component={Link} to="/categories">
+            All Sales
+          </SalesButton>
         </Grid>
       </Grid>
 
-      <CategoriesHeading>All Products</CategoriesHeading>
+      <SalesHeading>Discounted Items</SalesHeading>
 
       <Grid container spacing={4} mt={4}>
         <Grid item xs={12}>
@@ -261,16 +259,6 @@ function AllProductsComponent() {
               placeholder="to"
               value={priceTo}
               onChange={(e) => setPriceTo(e.target.value)}
-            />
-            <FilterLabel>Discounted items</FilterLabel>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={showDiscountedOnly}
-                  onChange={(e) => setShowDiscountedOnly(e.target.checked)}
-                />
-              }
-              label=""
             />
             <FilterLabel>Sorted</FilterLabel>
             <Select
@@ -306,38 +294,26 @@ function AllProductsComponent() {
               style={{ textDecoration: "none" }}
             >
               <ProductCard>
-                {product.discont_price && (
-                  <DiscountBadge
-                    badgeContent={
-                      "- " +
-                      Math.round(
-                        ((product.price - product.discont_price) /
-                          product.price) *
-                          100
-                      ) +
-                      " %"
-                    }
-                  >
-                    <ProductImage
-                      src={`http://localhost:3333${product.image}`}
-                      alt={product.title}
-                    />
-                  </DiscountBadge>
-                )}
-                {!product.discont_price && (
+                <DiscountBadge
+                  badgeContent={
+                    "- " +
+                    Math.round(
+                      ((product.price - product.discont_price) /
+                        product.price) *
+                        100
+                    ) +
+                    " %"
+                  }
+                >
                   <ProductImage
                     src={`http://localhost:3333${product.image}`}
                     alt={product.title}
                   />
-                )}
+                </DiscountBadge>
                 <ProductName>{product.title}</ProductName>
                 <ProductPrice>
-                  {product.discont_price
-                    ? `$${product.discont_price}`
-                    : `$${product.price}`}
-                  {product.discont_price && (
-                    <OldPrice>${product.price}</OldPrice>
-                  )}
+                  ${product.discont_price}
+                  <OldPrice>${product.price}</OldPrice>
                 </ProductPrice>
                 <AddToCartButton
                   isInCart={cartItems.includes(product.id)}
@@ -362,4 +338,4 @@ function AllProductsComponent() {
   );
 }
 
-export default AllProductsComponent;
+export default AllSalesComponent;
