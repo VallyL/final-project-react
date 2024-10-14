@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 const BasketHeading = styled(Typography)({
   fontSize: "64px",
   fontWeight: 700,
-  lineHeight: "50px",
+  lineHeight: "30px",
   color: "black",
+  marginBottom: "0",
 });
 
 const ShopButton = styled(Button)(({ theme }) => ({
@@ -38,7 +39,7 @@ function CartHeading() {
             marginLeft: "40px",
           }}
         />
-        <Link to="/allCategories" style={{ textDecoration: "none" }}>
+        <Link to="/allProducts" style={{ textDecoration: "none" }}>
           <ShopButton>Back to the store</ShopButton>
         </Link>
       </div>

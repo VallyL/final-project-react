@@ -16,6 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../../redux/productsSlice";
 import { addToCart, removeFromCart } from "../../redux/cartSlice.js";
+import cartSlice from "../../redux/cartSlice.js";
 
 const MainButton = styled(Button)(({ theme }) => ({
   fontSize: "16px",
@@ -106,6 +107,7 @@ const ProductCard = styled(Box)({
   paddingBottom: "20px",
   overflow: "hidden",
   position: "relative",
+  maxWidth: "380px",
 });
 
 const ProductImage = styled("img")({
@@ -113,6 +115,8 @@ const ProductImage = styled("img")({
   width: "100%",
   marginBottom: "5px",
   borderBottom: "2px solid rgba(221, 221, 221, 1)",
+  objectFit: "fill",
+  alignSelf: "center",
 });
 
 const ProductName = styled(Typography)({
@@ -223,12 +227,19 @@ function AllProductsComponent() {
     }
   });
 
-  const handleAddToCart = (productId) => {
-    dispatch(addToCart(productId));
+  const handleAddToCart = (product) => {
+    if (!product || !product) {
+      console.error("Product is null or does not have an ID");
+      return;
+    }
+    const cartItem = { ...product, quantity: 1 };
+    dispatch(addToCart({ product: cartItem }));
+
+    console.log({ cartItems });
   };
 
-  const handleRemoveFromCart = (productId) => {
-    dispatch(removeFromCart(productId));
+  const handleRemoveFromCart = (id) => {
+    dispatch(removeFromCart({ id }));
   };
 
   return (
@@ -330,8 +341,8 @@ function AllProductsComponent() {
                     alt={product.title}
                   />
                 )}
-                <ProductName>{product.title}</ProductName>
-                <ProductPrice>
+                <ProductName component="h2">{product.title}</ProductName>
+                <ProductPrice component="div">
                   {product.discont_price
                     ? `$${product.discont_price}`
                     : `$${product.price}`}
@@ -340,16 +351,14 @@ function AllProductsComponent() {
                   )}
                 </ProductPrice>
                 <AddToCartButton
-                  isInCart={cartItems.includes(product.id)}
-                  onClick={() => {
-                    if (cartItems.includes(product.id)) {
-                      handleRemoveFromCart(product.id);
-                    } else {
-                      handleAddToCart(product.id);
-                    }
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    cartItems.some((item) => item.id === product.id)
+                      ? handleRemoveFromCart(product.id)
+                      : handleAddToCart(product);
                   }}
                 >
-                  {cartItems.includes(product.id)
+                  {cartItems.some((item) => item.id === product.id)
                     ? "Remove from cart"
                     : "Add to cart"}
                 </AddToCartButton>
