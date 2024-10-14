@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { AppBar, Toolbar, Typography, IconButton, styled } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Logo from "../../assets/icons/logo.svg";
@@ -33,7 +34,25 @@ const CartContainer = styled("div")({
   marginTop: "10px",
 });
 
+const CartQuantitySpan = styled("span")({
+  width: "26px",
+  height: "26px",
+  backgroundColor: "rgba(13, 80, 255, 1)",
+  color: "white",
+  borderRadius: "50%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontSize: "14px",
+  fontWeight: "bold",
+  position: "absolute",
+  top: "-3px",
+  right: "-3px",
+});
+
 function Header() {
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   return (
     <StyledAppBar position="static">
       <StyledToolbar>
@@ -74,6 +93,9 @@ function Header() {
           <Link to="/cartPage" style={{ textDecoration: "none" }}>
             <IconButton aria-label="cart" color="black">
               <ShoppingCartIcon style={{ width: "100%", height: "100%" }} />
+              {cartItems.length > 0 && (
+                <CartQuantitySpan>{cartItems.length}</CartQuantitySpan>
+              )}
             </IconButton>
           </Link>
         </CartContainer>

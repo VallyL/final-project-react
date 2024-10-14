@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -7,14 +7,14 @@ import {
   styled,
   Box,
   TextField,
-  Checkbox,
-  FormControlLabel,
   Select,
   MenuItem,
   Badge,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
-import { Link } from "react-router-dom";
-import { fetchProducts } from "../../redux/productsSlice";
+import { Link, useParams } from "react-router-dom";
+import { fetchProductsByCategory } from "../../redux/productsSlice";
 import { addToCart, removeFromCart } from "../../redux/cartSlice.js";
 
 const MainButton = styled(Button)(({ theme }) => ({
@@ -180,11 +180,21 @@ const AddToCartButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-function AllProductsComponent() {
+function OneCategoryComponent() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const isLoading = useSelector((state) => state.products.isLoading);
-  const error = useSelector((state) => state.products.error);
+  const { id } = useParams();
+  const products = useSelector(
+    (state) => state.products.productsByCategory[id] || []
+  );
+  const isLoading = useSelector(
+    (state) => state.products.isLoadingByCategory[id] || false
+  );
+  const error = useSelector(
+    (state) => state.products.errorByCategory[id] || null
+  );
+  const category = useSelector(
+    (state) => state.products.categories?.[id] || {}
+  );
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   const [priceFrom, setPriceFrom] = useState("");
@@ -193,8 +203,8 @@ function AllProductsComponent() {
   const [sortOption, setSortOption] = useState("by default");
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProductsByCategory(id));
+  }, [dispatch, id]);
 
   const filteredProducts = products.filter((product) => {
     if (priceFrom && !isNaN(priceFrom)) {
@@ -227,18 +237,11 @@ function AllProductsComponent() {
   });
 
   const handleAddToCart = (product) => {
-    if (!product || !product) {
-      console.error("Product is null or does not have an ID");
-      return;
-    }
-    const cartItem = { ...product, quantity: 1 };
-    dispatch(addToCart({ product: cartItem }));
-
-    console.log({ cartItems });
+    dispatch(addToCart(product));
   };
 
-  const handleRemoveFromCart = (id) => {
-    dispatch(removeFromCart({ id }));
+  const handleRemoveFromCart = (product) => {
+    dispatch(removeFromCart(product));
   };
 
   return (
@@ -248,13 +251,18 @@ function AllProductsComponent() {
           <MainButton component={Link} to="/">
             Main page
           </MainButton>
-          <CategoriesButton component={Link} to="/categories">
-            All Products
+          <MainButton component={Link} to="/allCategories">
+            Categories
+          </MainButton>
+          <CategoriesButton component={Link} to="/categories/:id">
+            {category ? category.title : "Loading..."}
           </CategoriesButton>
         </Grid>
       </Grid>
 
-      <CategoriesHeading>All Products</CategoriesHeading>
+      <CategoriesHeading>
+        {category ? category.title : "Loading..."}
+      </CategoriesHeading>
 
       <Grid container spacing={4} mt={4}>
         <Grid item xs={12}>
@@ -340,7 +348,7 @@ function AllProductsComponent() {
                     alt={product.title}
                   />
                 )}
-                <ProductName component="h2">{product.title}</ProductName>
+                <ProductName>{product.title}</ProductName>
                 <ProductPrice component="div">
                   {product.discont_price
                     ? `$${product.discont_price}`
@@ -370,4 +378,4 @@ function AllProductsComponent() {
   );
 }
 
-export default AllProductsComponent;
+export default OneCategoryComponent;

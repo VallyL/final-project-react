@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProductPage from "./pages/ProductPage";
+import OneCategoryPage from "./pages/OneCategoryPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/allSales" element={<AllSalesPage />} />
         <Route path="/cartPage" element={<CartPage />} />
         <Route path="/products/:id" element={<ProductPage />} />
+        <Route path="/categories/:id" element={<OneCategoryPage />} />
       </Routes>
       <Footer />
     </>
