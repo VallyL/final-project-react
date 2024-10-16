@@ -1,6 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const initialState = {
+  products: [],
+  isLoading: false,
+  error: null,
+  productsByCategory: {},
+  isLoadingByCategory: {},
+  errorByCategory: {},
+  product: null,
+  isLoadingProduct: false,
+  errorProduct: null,
+};
+
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
@@ -17,25 +29,38 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductsByCategory = createAsyncThunk(
   "products/fetchProductsByCategory",
   async (id) => {
-    const response = await axios.get(`http://localhost:3333/categories/${id}`);
-    return {
-      id,
-      products: response.data.data,
-      category: response.data.category,
-    };
+    try {
+      const response = await axios.get(
+        `http://localhost:3333/categories/${id}`
+      );
+      return {
+        id,
+        products: response.data.data,
+        category: response.data.category,
+      };
+    } catch (error) {
+      console.error("Error fetching products by category:", error);
+      return { id, error: error.message };
+    }
+  }
+);
+
+export const fetchProduct = createAsyncThunk(
+  "products/fetchProduct",
+  async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:3333/products/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      return { error: error };
+    }
   }
 );
 
 const productsSlice = createSlice({
   name: "products",
-  initialState: {
-    products: [],
-    isLoading: false,
-    error: null,
-    productsByCategory: {},
-    isLoadingByCategory: {},
-    errorByCategory: {},
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -63,6 +88,18 @@ const productsSlice = createSlice({
       .addCase(fetchProductsByCategory.rejected, (state, action) => {
         state.isLoadingByCategory[action.payload.id] = false;
         state.errorByCategory[action.payload.id] = action.payload.error;
+      })
+      .addCase(fetchProduct.pending, (state) => {
+        state.isLoadingProduct = true;
+        state.errorProduct = null;
+      })
+      .addCase(fetchProduct.fulfilled, (state, action) => {
+        state.isLoadingProduct = false;
+        state.product = action.payload;
+      })
+      .addCase(fetchProduct.rejected, (state, action) => {
+        state.isLoadingProduct = false;
+        state.errorProduct = action.error.message;
       });
   },
 });

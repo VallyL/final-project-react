@@ -1,5 +1,11 @@
+import OneProductComponent from "../../components/OneProductComponent";
+
 function ProductPage() {
-  return <></>;
+  return (
+    <>
+      <OneProductComponent />
+    </>
+  );
 }
 
 export default ProductPage;
