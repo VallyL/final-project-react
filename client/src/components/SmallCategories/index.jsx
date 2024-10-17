@@ -96,7 +96,7 @@ function SmallCategories() {
         {categories.slice(0, 4).map((category) => (
           <Grid item xs={12} sm={6} md={3} key={category.id}>
             <Link
-              to={`/categories/${category.title}`}
+              to={`/categories/${category.id}`}
               style={{ textDecoration: "none" }}
             >
               <CategoryContainer>

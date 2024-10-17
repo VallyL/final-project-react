@@ -35,21 +35,12 @@ const CategoriesButton = styled(Button)(({ theme }) => ({
 }));
 
 const ProductImage = styled("img")({
-  height: "284px",
   width: "100%",
+  marginLeft: "40px",
   marginBottom: "5px",
   borderBottom: "2px solid rgba(221, 221, 221, 1)",
   objectFit: "fill",
   alignSelf: "center",
-});
-
-const CategoriesHeading = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "40px",
-  color: "black",
-  marginBottom: "0px",
-  marginTop: "60px",
 });
 
 const DiscountBadge = styled(Badge)(({ theme }) => ({
@@ -60,9 +51,6 @@ const DiscountBadge = styled(Badge)(({ theme }) => ({
     fontSize: "14px",
     fontWeight: 600,
     lineHeight: "18px",
-    position: "absolute",
-    top: "20px",
-    right: "35px",
   },
 }));
 
@@ -74,15 +62,8 @@ const AddToCartButton = styled(Button)(({ theme }) => ({
   lineHeight: "26px",
   padding: "20px 20px",
   borderRadius: "5px",
-  position: "absolute",
-  bottom: "170px",
-  right: "20px",
-  left: "20px",
-  opacity: 0,
-  transition: "opacity 0.1s ease-in-out",
-  "&:hover": {
-    opacity: 1,
-  },
+  height: "58px",
+  width: "65%",
 }));
 
 const ProductDetailsHeading = styled(Typography)({
@@ -95,8 +76,9 @@ const ProductDetailsHeading = styled(Typography)({
 
 const ProductPriceContainer = styled(Box)({
   display: "flex",
-  alignItems: "center",
+  alignItems: "start",
   marginBottom: "20px",
+  gap: "20px",
 });
 
 const ProductPrice = styled(Typography)({
@@ -128,15 +110,21 @@ const ProductQuantityContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   marginBottom: "20px",
+  border: "1px solid rgba(221, 221, 221, 1)",
+  borderRadius: "5px",
+  height: "58px",
+  width: "200px",
+  justifyContent: "space-between",
 });
 
 const ProductQuantityButton = styled(Button)({
   padding: "5px 10px",
-  borderRadius: "5px",
   fontSize: "16px",
   fontWeight: 500,
   lineHeight: "20px",
-  border: "1px solid rgba(221, 221, 221, 1)",
+  borderLeft: "1px solid rgba(221, 221, 221, 1)",
+  borderRight: "1px solid rgba(221, 221, 221, 1)",
+  height: "100%",
 });
 
 const ProductQuantity = styled(Typography)({
@@ -165,7 +153,6 @@ function OneProductComponent() {
   const product = useSelector((state) => state.products.product);
   const isLoading = useSelector((state) => state.products.isLoadingProduct);
   const error = useSelector((state) => state.products.errorProduct);
-  const cartItems = useSelector((state) => state.cart.cartItems);
 
   const [quantity, setQuantity] = useState(1);
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -208,20 +195,17 @@ function OneProductComponent() {
           <MainButton component={Link} to="/">
             Main page
           </MainButton>
-          <CategoriesButton component={Link} to="/categories">
+          <MainButton component={Link} to="/categories">
             Categories
-          </CategoriesButton>
-          <CategoriesButton component={Link} to="/categories">
+          </MainButton>
+          <MainButton component={Link} to="/categories/:id">
             {product && product.category}
-          </CategoriesButton>
+          </MainButton>
           <CategoriesButton component={Link} to="/categories">
             {product && product.title}
           </CategoriesButton>
         </Grid>
       </Grid>
-
-      <CategoriesHeading>{product && product.category}</CategoriesHeading>
-
       <Grid container spacing={4} mt={4}>
         {isLoading && (
           <Grid item xs={12}>
@@ -242,11 +226,6 @@ function OneProductComponent() {
                 src={`http://localhost:3333${product.image}`}
                 alt={product.title}
               />
-              {product.discont_price && (
-                <DiscountBadge
-                  badgeContent={"-" + calculateDiscountPercentage() + " %"}
-                />
-              )}
             </Grid>
             <Grid item xs={12} md={6}>
               <ProductDetailsHeading>{product.title}</ProductDetailsHeading>
@@ -265,28 +244,29 @@ function OneProductComponent() {
                   </DiscountPercentageSpan>
                 )}
               </ProductPriceContainer>
-              <ProductQuantityContainer>
-                <ProductQuantityButton
-                  onClick={() => handleQuantityChange(quantity - 1)}
-                  disabled={quantity <= 1}
+              <ProductPriceContainer>
+                <ProductQuantityContainer>
+                  <ProductQuantityButton
+                    onClick={() => handleQuantityChange(quantity - 1)}
+                    disabled={quantity <= 1}
+                  >
+                    -
+                  </ProductQuantityButton>
+                  <ProductQuantity>{quantity}</ProductQuantity>
+                  <ProductQuantityButton
+                    onClick={() => handleQuantityChange(quantity + 1)}
+                  >
+                    +
+                  </ProductQuantityButton>
+                </ProductQuantityContainer>
+                <AddToCartButton
+                  onClick={() => {
+                    handleAddToCart(product);
+                  }}
                 >
-                  -
-                </ProductQuantityButton>
-                <ProductQuantity>{quantity}</ProductQuantity>
-                <ProductQuantityButton
-                  onClick={() => handleQuantityChange(quantity + 1)}
-                >
-                  +
-                </ProductQuantityButton>
-              </ProductQuantityContainer>
-              <AddToCartButton
-                onClick={() => {
-                  handleAddToCart(product);
-                }}
-              >
-                Add to cart
-              </AddToCartButton>
-
+                  Add to cart
+                </AddToCartButton>
+              </ProductPriceContainer>
               <ProductDescriptionHeading>Description</ProductDescriptionHeading>
               <ProductDescription>
                 {product?.description && (

@@ -49,7 +49,9 @@ export const fetchProduct = createAsyncThunk(
   "products/fetchProduct",
   async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3333/products/${id}`);
+      const response = await axios.get(
+        `http://localhost:3333/products/${id}?timestamp=${new Date().getTime()}`
+      );
       return response.data;
     } catch (error) {
       console.error("Error fetching product:", error);
