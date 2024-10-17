@@ -1,64 +1,16 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Grid, Typography, Button, styled, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { fetchCategories } from "../../redux/categoriesSlice";
-
-const MainButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  padding: "10px 20px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(139, 139, 139, 1)",
-  borderRadius: "10px",
-  border: "2px solid rgba(221, 221, 221, 1)",
-  marginRight: "10px",
-}));
-
-const CategoriesButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(40, 40, 40, 1)",
-  borderRadius: "10px",
-  border: "2px solid rgba(221, 221, 221, 1)",
-  padding: "10px 20px",
-}));
-
-const CategoriesHeading = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "40px",
-  color: "black",
-  marginBottom: "0px",
-  marginTop: "60px",
-});
-
-const CategoryContainer = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  padding: "5px",
-  cursor: "pointer",
-  transition: "transform 0.2s ease-in-out",
-  "&:hover": {
-    transform: "scale(1.05)",
-  },
-});
-
-const CategoryImage = styled("img")({
-  height: "350px",
-  width: "100%",
-  borderRadius: "10px",
-  marginBottom: "10px",
-});
-
-const CategoryName = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  color: "black",
-});
+import {
+  MainButton,
+  CategoriesButton,
+  CategoriesHeading,
+  CategoryContainer,
+  CategoryImage,
+  CategoryName,
+} from "../../assets/styles/StyledComponents";
 
 function AllCategoriesComponent() {
   const dispatch = useDispatch();

@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Grid,
-  Typography,
-  Button,
-  styled,
-  Box,
-  TextField,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { sendOrder } from "../../redux/orderSlice.js";
 import {
@@ -16,211 +9,30 @@ import {
   setInitialCartItems,
   clearCart,
 } from "../../redux/cartSlice.js";
-
-const CartItemContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "start",
-  alignItems: "center",
-  padding: "0px",
-  border: "1px solid rgba(221, 221, 221, 1)",
-  borderRadius: "10px",
-  marginBottom: "20px",
-  position: "relative",
-});
-
-const CartItemImage = styled("img")({
-  width: "220px",
-  height: "100%",
-  borderRight: "1px solid rgba(221, 221, 221, 1)",
-  objectFit: "fill",
-});
-
-const CartItemDetails = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  marginLeft: "30px",
-  gap: "30px",
-});
-
-const CartItemTitle = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  marginBottom: "10px",
-});
-
-const CartItemQuantityContainer = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  marginBottom: "15px",
-  border: "1px solid rgba(221, 221, 221, 1)",
-  borderRadius: "5px",
-  height: "58px",
-});
-
-const CartItemQuantityButton = styled(Button)({
-  padding: "5px 10px",
-  fontSize: "26px",
-  fontWeight: 700,
-  lineHeight: "20px",
-  borderLeft: "1px solid rgba(221, 221, 221, 1)",
-  borderRight: "1px solid rgba(221, 221, 221, 1)",
-  height: "58px",
-  color: "rgba(139, 139, 139, 1)",
-});
-
-const CartItemQuantity = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  margin: "0 30px",
-});
-
-const CartItemPrice = styled(Typography)({
-  fontSize: "40px",
-  fontWeight: 600,
-  lineHeight: "44px",
-  display: "flex",
-});
-
-const CartItemOldPrice = styled(Typography)({
-  color: "rgba(139, 139, 139, 1)",
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  textDecoration: "line-through",
-  marginLeft: "10px",
-});
-
-const CartItemRemoveButton = styled(Button)({
-  fontSize: "22px",
-  fontWeight: 700,
-  lineHeight: "26px",
-  color: "rgba(139, 139, 139, 1)",
-  cursor: "pointer",
-  position: "absolute",
-  top: "25px",
-  right: "10px",
-});
-
-const OrderDetailsContainer = styled(Box)({
-  backgroundColor: "rgba(241, 243, 244, 1)",
-  borderRadius: "20px",
-  padding: "30px",
-  width: "100%",
-});
-
-const OrderDetailsHeading = styled(Typography)({
-  fontSize: "40px",
-  fontWeight: 700,
-  lineHeight: "44px",
-  marginBottom: "20px",
-});
-
-const OrderDetailsInfo = styled(Typography)({
-  color: "rgba(139, 139, 139, 1)",
-  fontSize: "40px",
-  fontWeight: 500,
-  lineHeight: "52px",
-  marginBottom: "20px",
-});
-
-const OrderDetailsTotal = styled(Box)({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: "20px",
-});
-
-const OrderDetailsTotalLabel = styled(Typography)({
-  color: "rgba(139, 139, 139, 1)",
-  fontSize: "40px",
-  fontWeight: 500,
-  lineHeight: "52px",
-});
-
-const OrderDetailsTotalPrice = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "70px",
-});
-
-const DiscountForm = styled("form")({
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-  alignItems: "center",
-  margin: "0 auto",
-  paddingTop: "20px",
-});
-
-const DiscountInput = styled(TextField)(({ theme }) => ({
-  marginBottom: "20px",
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "white",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "white",
-    },
-  },
-  "& .MuiOutlinedInput-input": {
-    color: "rgba(139, 139, 139, 1)",
-  },
-  "& label": {
-    color: "rgba(139, 139, 139, 1)",
-  },
-  "& .MuiInputLabel-root": {
-    "&.Mui-focused": {
-      color: "rgba(139, 139, 139, 1)",
-    },
-  },
-  width: "100%",
-  backgroundColor: "white",
-  color: "rgba(139, 139, 139, 1)",
-  fontSize: "20px",
-  fontWeight: "500",
-  lineHeight: "26px",
-}));
-
-const DiscountButton = styled(Button)({
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  color: "white",
-  backgroundColor: "rgba(13, 80, 255, 1)",
-  padding: "15px 30px",
-  marginTop: "20px",
-  cursor: "pointer",
-  border: "none",
-  width: "100%",
-  marginBottom: "0px",
-});
-
-const DiscountMessage = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  color: "white",
-  marginLeft: "20px",
-});
-
-const EmptyCartMessage = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  marginBottom: "20px",
-});
-
-const ContinueShoppingButton = styled(Button)({
-  backgroundColor: "rgba(13, 80, 255, 1)",
-  color: "white",
-  borderRadius: "10px",
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  padding: "15px 30px",
-});
+import {
+  CartItemContainer,
+  CartItemImage,
+  CartItemDetails,
+  CartItemTitle,
+  CartItemQuantityContainer,
+  CartItemQuantityButton,
+  CartItemQuantity,
+  CartItemPrice,
+  CartItemOldPrice,
+  CartItemRemoveButton,
+  OrderDetailsContainer,
+  OrderDetailsHeading,
+  OrderDetailsInfo,
+  OrderDetailsTotal,
+  OrderDetailsTotalLabel,
+  OrderDetailsTotalPrice,
+  CartDiscountForm,
+  CartDiscountInput,
+  CartDiscountButton,
+  CartDiscountMessage,
+  EmptyCartMessage,
+  ContinueShoppingButton,
+} from "../../assets/styles/StyledComponents.js";
 
 function CartComponent() {
   const dispatch = useDispatch();
@@ -419,36 +231,38 @@ function CartComponent() {
                 ${calculateTotalPrice().toFixed(2)}
               </OrderDetailsTotalPrice>
             </OrderDetailsTotal>
-            <DiscountForm onSubmit={handleSubmit}>
-              <DiscountInput
+            <CartDiscountForm onSubmit={handleSubmit}>
+              <CartDiscountInput
                 label="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
-              <DiscountInput
+              <CartDiscountInput
                 label="Phone number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 required
               />
-              <DiscountInput
+              <CartDiscountInput
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <DiscountButton type="submit">Order</DiscountButton>
+              <CartDiscountButton type="submit">Order</CartDiscountButton>
               {errorMessage && (
-                <DiscountMessage>{errorMessage}</DiscountMessage>
+                <CartDiscountMessage>{errorMessage}</CartDiscountMessage>
               )}
               {isSubmitted && (
-                <DiscountMessage>We will get in touch soon</DiscountMessage>
+                <CartDiscountMessage>
+                  We will get in touch soon
+                </CartDiscountMessage>
               )}
-              <DiscountButton onClick={handleClearCart}>
+              <CartDiscountButton onClick={handleClearCart}>
                 Clear Cart
-              </DiscountButton>
-            </DiscountForm>
+              </CartDiscountButton>
+            </CartDiscountForm>
           </OrderDetailsContainer>
         </Grid>
       </Grid>

@@ -1,25 +1,9 @@
 import { Button, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-
-const BasketHeading = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "30px",
-  color: "black",
-  marginBottom: "0",
-});
-
-const ShopButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(139, 139, 139, 1)",
-  border: "1px solid rgba(221, 221, 221, 1)",
-  padding: "10px 30px",
-  borderRadius: "10px",
-  textDecoration: "none",
-  width: "242px",
-}));
+import {
+  BasketHeading,
+  ShopButton,
+} from "../../assets/styles/StyledComponents";
 
 function CartHeading() {
   return (

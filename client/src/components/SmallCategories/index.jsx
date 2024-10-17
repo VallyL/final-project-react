@@ -1,47 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Typography, Button, styled, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import { fetchCategories } from "../../redux/categoriesSlice";
 import { Link } from "react-router-dom";
-
-const CategoriesHeading = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "50px",
-  color: "black",
-});
-
-const AllCategoriesButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(139, 139, 139, 1)",
-  border: "1px solid rgba(221, 221, 221, 1)",
-  padding: "10px 30px",
-  borderRadius: "10px",
-  textDecoration: "none",
-  width: "142px",
-}));
-
-const CategoryContainer = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  cursor: "pointer",
-});
-
-const CategoryImage = styled("img")({
-  height: "350px",
-  borderRadius: "20px",
-  marginBottom: "10px",
-});
-
-const CategoryName = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  color: "black",
-});
+import {
+  SmallCategoriesHeading,
+  AllCategoriesButton,
+  SmallCategoryContainer,
+  SmallCategoryImage,
+  SmallCategoryName,
+} from "../../assets/styles/StyledComponents";
 
 function SmallCategories() {
   const dispatch = useDispatch();
@@ -71,7 +39,7 @@ function SmallCategories() {
         }}
       >
         <Grid item>
-          <CategoriesHeading>Categories</CategoriesHeading>
+          <SmallCategoriesHeading>Categories</SmallCategoriesHeading>
         </Grid>
         <hr
           style={{
@@ -99,13 +67,13 @@ function SmallCategories() {
               to={`/categories/${category.id}`}
               style={{ textDecoration: "none" }}
             >
-              <CategoryContainer>
-                <CategoryImage
+              <SmallCategoryContainer>
+                <SmallCategoryImage
                   src={`http://localhost:3333${category.image}`}
                   alt={category.title}
                 />
-                <CategoryName>{category.title}</CategoryName>
-              </CategoryContainer>
+                <SmallCategoryName>{category.title}</SmallCategoryName>
+              </SmallCategoryContainer>
             </Link>
           </Grid>
         ))}

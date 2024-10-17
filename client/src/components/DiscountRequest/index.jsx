@@ -1,83 +1,16 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Grid, Typography, TextField, Button, styled } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { Grid } from "@mui/material";
 import { sendDiscountRequest } from "../../redux/discountSlice";
 import BackgroundDos from "../../assets/images/image.svg";
-
-const DiscountContainer = styled("div")({
-  backgroundColor: "rgba(36, 81, 198, 1)",
-  background:
-    "linear-gradient(to bottom, rgba(36, 81, 198, 1), rgba(13, 80, 255, 1))",
-  paddingTop: "30px",
-  minHeight: "500px",
-  display: "flex",
-  justifyContent: "end",
-  alignItems: "center",
-  flexDirection: "column",
-  borderRadius: "20px",
-});
-
-const DiscountHeading = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "70px",
-  color: "white",
-  marginBottom: "40px",
-});
-
-const DiscountForm = styled("form")({
-  display: "flex",
-  flexDirection: "column",
-  width: "500px",
-  marginBottom: "20px",
-  alignItems: "center",
-});
-
-const DiscountInput = styled(TextField)(({ theme }) => ({
-  marginBottom: "20px",
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "white",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "white",
-    },
-  },
-  "& .MuiOutlinedInput-input": {
-    color: "white",
-  },
-  "& label": {
-    color: "white",
-  },
-  "& .MuiInputLabel-root": {
-    "&.Mui-focused": {
-      color: "white",
-    },
-  },
-  width: "500px",
-}));
-
-const DiscountButton = styled(Button)({
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  color: "black",
-  backgroundColor: "white",
-  padding: "15px 30px",
-  marginTop: "20px",
-  cursor: "pointer",
-  border: "none",
-  width: "500px",
-  marginBottom: "10px",
-});
-
-const DiscountMessage = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  color: "white",
-  marginLeft: "20px",
-});
+import {
+  DiscountContainer,
+  DiscountHeading,
+  DiscountForm,
+  DiscountInput,
+  DiscountButton,
+  DiscountMessage,
+} from "../../assets/styles/StyledComponents";
 
 function DiscountRequest() {
   const dispatch = useDispatch();

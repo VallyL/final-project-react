@@ -1,54 +1,16 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AppBar, Toolbar, Typography, IconButton, styled } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Logo from "../../assets/icons/logo.svg";
-
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: "white",
-  padding: "20px 30px",
-  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-}));
-
-const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-  justifyContent: "space-between",
-  alignItems: "center",
-}));
-
-const StyledLink = styled(Link)(({ theme }) => ({
-  textDecoration: "none",
-  color: "black",
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-}));
-
-const LogoContainer = styled("div")({
-  width: "70px",
-  height: "70px",
-});
-
-const CartContainer = styled("div")({
-  width: "48px",
-  height: "48px",
-  marginTop: "10px",
-});
-
-const CartQuantitySpan = styled("span")({
-  width: "26px",
-  height: "26px",
-  backgroundColor: "rgba(13, 80, 255, 1)",
-  color: "white",
-  borderRadius: "50%",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  fontSize: "14px",
-  fontWeight: "bold",
-  position: "absolute",
-  top: "-3px",
-  right: "-3px",
-});
+import {
+  StyledAppBar,
+  StyledToolbar,
+  StyledLink,
+  LogoContainer,
+  CartContainer,
+  CartQuantitySpan,
+} from "../../assets/styles/StyledComponents";
 
 function Header() {
   const cartItems = useSelector((state) => state.cart.cartItems);

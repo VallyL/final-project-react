@@ -3,182 +3,29 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   Typography,
-  Button,
-  styled,
-  Box,
-  TextField,
   Checkbox,
   FormControlLabel,
   Select,
   MenuItem,
-  Badge,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../../redux/productsSlice";
 import { addToCart, removeFromCart } from "../../redux/cartSlice.js";
-
-const MainButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  padding: "10px 20px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(139, 139, 139, 1)",
-  borderRadius: "10px",
-  border: "2px solid rgba(221, 221, 221, 1)",
-  marginRight: "10px",
-}));
-
-const CategoriesButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(40, 40, 40, 1)",
-  borderRadius: "10px",
-  border: "2px solid rgba(221, 221, 221, 1)",
-  padding: "10px 20px",
-}));
-
-const CategoriesHeading = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "40px",
-  color: "black",
-  marginBottom: "0px",
-  marginTop: "60px",
-});
-
-const FilterContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "start",
-  gap: "20px",
-  alignItems: "center",
-  marginBottom: "0px",
-});
-
-const FilterLabel = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-});
-
-const FilterInput = styled(TextField)(({ theme }) => ({
-  width: "112px",
-  borderRadius: "20px",
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "16px",
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "rgba(191, 191, 191, 1)",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "rgba(191, 191, 191, 1)",
-    },
-  },
-  "& .MuiOutlinedInput-input": {
-    color: "rgba(139, 139, 139, 1)",
-  },
-  "& label": {
-    color: "rgba(139, 139, 139, 1)",
-  },
-  "& .MuiInputLabel-root": {
-    "&.Mui-focused": {
-      color: "rgba(139, 139, 139, 1)",
-    },
-  },
-  marginRight: "0px",
-}));
-
-const ProductCard = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "start",
-  justifyContent: "space-between",
-  padding: "0px",
-  border: "1px solid rgba(221, 221, 221, 1)",
-  borderRadius: "20px",
-  cursor: "pointer",
-  transition: "transform 0.2s ease-in-out",
-  "&:hover": {
-    transform: "scale(1.05)",
-  },
-  height: "450px",
-  paddingBottom: "20px",
-  overflow: "hidden",
-  position: "relative",
-  maxWidth: "380px",
-});
-
-const ProductImage = styled("img")({
-  height: "284px",
-  width: "100%",
-  marginBottom: "5px",
-  borderBottom: "2px solid rgba(221, 221, 221, 1)",
-  objectFit: "fill",
-  alignSelf: "center",
-});
-
-const ProductName = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  color: "black",
-  marginBottom: "10px",
-  marginLeft: "20px",
-  marginRight: "20px",
-});
-
-const ProductPrice = styled(Typography)({
-  fontSize: "40px",
-  fontWeight: 600,
-  lineHeight: "44px",
-  color: "black",
-  display: "flex",
-  gap: "5px",
-  marginLeft: "20px",
-});
-
-const OldPrice = styled(Typography)({
-  color: "rgba(139, 139, 139, 1)",
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  textDecoration: "line-through",
-  marginLeft: "10px",
-});
-
-const DiscountBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    backgroundColor: "rgba(13, 80, 255, 1)",
-    color: "white",
-    borderRadius: "5px",
-    fontSize: "14px",
-    fontWeight: 600,
-    lineHeight: "18px",
-    position: "absolute",
-    top: "20px",
-    right: "35px",
-  },
-}));
-
-const AddToCartButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "rgba(13, 80, 255, 1)",
-  color: "white",
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  padding: "20px 20px",
-  borderRadius: "5px",
-  position: "absolute",
-  bottom: "170px",
-  right: "20px",
-  left: "20px",
-  opacity: 0,
-  transition: "opacity 0.1s ease-in-out",
-  "&:hover": {
-    opacity: 1,
-  },
-}));
+import {
+  MainButton,
+  CategoriesButton,
+  CategoriesHeading,
+  FilterContainer,
+  FilterLabel,
+  FilterInput,
+  ProductCard,
+  SmallProductImage,
+  SmallProductName,
+  SmallProductPrice,
+  SmallOldPrice,
+  DiscountBadge,
+  SmallAddToCartButton,
+} from "../../assets/styles/StyledComponents.js";
 
 function AllProductsComponent() {
   const dispatch = useDispatch();
@@ -328,28 +175,30 @@ function AllProductsComponent() {
                       " %"
                     }
                   >
-                    <ProductImage
+                    <SmallProductImage
                       src={`http://localhost:3333${product.image}`}
                       alt={product.title}
                     />
                   </DiscountBadge>
                 )}
                 {!product.discont_price && (
-                  <ProductImage
+                  <SmallProductImage
                     src={`http://localhost:3333${product.image}`}
                     alt={product.title}
                   />
                 )}
-                <ProductName component="h2">{product.title}</ProductName>
-                <ProductPrice component="div">
+                <SmallProductName component="h2">
+                  {product.title}
+                </SmallProductName>
+                <SmallProductPrice component="div">
                   {product.discont_price
                     ? `$${product.discont_price}`
                     : `$${product.price}`}
                   {product.discont_price && (
-                    <OldPrice>${product.price}</OldPrice>
+                    <SmallOldPrice>${product.price}</SmallOldPrice>
                   )}
-                </ProductPrice>
-                <AddToCartButton
+                </SmallProductPrice>
+                <SmallAddToCartButton
                   onClick={(event) => {
                     event.stopPropagation();
                     cartItems.some((item) => item.id === product.id)
@@ -360,7 +209,7 @@ function AllProductsComponent() {
                   {cartItems.some((item) => item.id === product.id)
                     ? "Remove from cart"
                     : "Add to cart"}
-                </AddToCartButton>
+                </SmallAddToCartButton>
               </ProductCard>
             </Link>
           </Grid>

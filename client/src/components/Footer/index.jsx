@@ -1,37 +1,11 @@
-import {
-  Grid,
-  Typography,
-  Box,
-  IconButton,
-  Container,
-  styled,
-} from "@mui/material";
+import { Grid, Typography, Box, IconButton, Container } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-
-const ContactSection = styled("div")({
-  backgroundColor: "rgba(241, 243, 244, 1)",
-  borderRadius: "20px",
-  display: "flex",
-  flexDirection: "column",
-  padding: "20px",
-});
-
-const ContactHeading = styled(Typography)({
-  fontSize: "40px",
-  fontWeight: 600,
-  lineHeight: "44px",
-  color: "black",
-  marginTop: "10px",
-});
-
-const ContactParagraph = styled(Typography)({
-  color: "rgba(139, 139, 139, 1)",
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  marginBottom: "10px",
-});
+import {
+  ContactSection,
+  ContactHeading,
+  ContactParagraph,
+} from "../../assets/styles/StyledComponents";
 
 function Footer() {
   return (

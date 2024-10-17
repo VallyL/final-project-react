@@ -1,151 +1,25 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Grid,
-  Typography,
-  Button,
-  styled,
-  Box,
-  Badge,
-  Link,
-} from "@mui/material";
+import { Grid, Typography, Button, Link } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { fetchProduct } from "../../redux/productsSlice";
 import { addToCart, removeFromCart } from "../../redux/cartSlice.js";
-
-const MainButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  padding: "10px 20px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(139, 139, 139, 1)",
-  borderRadius: "10px",
-  border: "2px solid rgba(221, 221, 221, 1)",
-  marginRight: "10px",
-}));
-
-const CategoriesButton = styled(Button)(({ theme }) => ({
-  fontSize: "16px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  color: "rgba(40, 40, 40, 1)",
-  borderRadius: "10px",
-  border: "2px solid rgba(221, 221, 221, 1)",
-  padding: "10px 20px",
-}));
-
-const ProductImage = styled("img")({
-  width: "100%",
-  marginLeft: "40px",
-  marginBottom: "5px",
-  borderBottom: "2px solid rgba(221, 221, 221, 1)",
-  objectFit: "fill",
-  alignSelf: "center",
-});
-
-const DiscountBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    backgroundColor: "rgba(13, 80, 255, 1)",
-    color: "white",
-    borderRadius: "5px",
-    fontSize: "14px",
-    fontWeight: 600,
-    lineHeight: "18px",
-  },
-}));
-
-const AddToCartButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "rgba(13, 80, 255, 1)",
-  color: "white",
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  padding: "20px 20px",
-  borderRadius: "5px",
-  height: "58px",
-  width: "65%",
-}));
-
-const ProductDetailsHeading = styled(Typography)({
-  fontSize: "40px",
-  fontWeight: 700,
-  lineHeight: "44px",
-  color: "black",
-  marginBottom: "20px",
-});
-
-const ProductPriceContainer = styled(Box)({
-  display: "flex",
-  alignItems: "start",
-  marginBottom: "20px",
-  gap: "20px",
-});
-
-const ProductPrice = styled(Typography)({
-  fontSize: "64px",
-  fontWeight: 700,
-  lineHeight: "70px",
-});
-
-const ProductOldPrice = styled(Typography)({
-  color: "rgba(139, 139, 139, 1)",
-  fontSize: "40px",
-  fontWeight: 500,
-  lineHeight: "52px",
-  textDecoration: "line-through",
-});
-
-const DiscountPercentageSpan = styled("span")({
-  backgroundColor: "rgba(13, 80, 255, 1)",
-  height: "35px",
-  color: "white",
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  padding: "5px 10px",
-  borderRadius: "5px",
-});
-
-const ProductQuantityContainer = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  marginBottom: "20px",
-  border: "1px solid rgba(221, 221, 221, 1)",
-  borderRadius: "5px",
-  height: "58px",
-  width: "200px",
-  justifyContent: "space-between",
-});
-
-const ProductQuantityButton = styled(Button)({
-  padding: "5px 10px",
-  fontSize: "16px",
-  fontWeight: 500,
-  lineHeight: "20px",
-  borderLeft: "1px solid rgba(221, 221, 221, 1)",
-  borderRight: "1px solid rgba(221, 221, 221, 1)",
-  height: "100%",
-});
-
-const ProductQuantity = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 500,
-  lineHeight: "26px",
-  margin: "0 10px",
-});
-
-const ProductDescriptionHeading = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: 600,
-  lineHeight: "26px",
-  marginBottom: "10px",
-});
-
-const ProductDescription = styled(Typography)({
-  fontSize: "16px",
-  fontWeight: 400,
-  lineHeight: "20px",
-});
+import {
+  MainButton,
+  CategoriesButton,
+  ProductImage,
+  AddToCartButton,
+  ProductDetailsHeading,
+  ProductPriceContainer,
+  ProductPrice,
+  ProductOldPrice,
+  DiscountPercentageSpan,
+  ProductQuantityContainer,
+  ProductQuantityButton,
+  ProductDescriptionHeading,
+  ProductDescription,
+  ProductQuantity,
+} from "../../assets/styles/StyledComponents.js";
 
 function OneProductComponent() {
   const dispatch = useDispatch();
