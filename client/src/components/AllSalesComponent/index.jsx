@@ -73,8 +73,6 @@ function AllSalesComponent() {
     }
     const cartItem = { ...product, quantity: 1 };
     dispatch(addToCart({ product: cartItem }));
-
-    console.log({ cartItems });
   };
 
   const handleRemoveFromCart = (id) => {

@@ -1,4 +1,3 @@
-import { Button, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
   BasketHeading,
